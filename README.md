@@ -11,6 +11,7 @@ run node dist/index.js
 
 Access Output:
 Open a browser and navigate to http://localhost:3000/process
+
 Refresh the page to generate the citizens-super-secret-info.txt file.
 
 View Output:
