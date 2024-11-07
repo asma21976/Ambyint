@@ -26,6 +26,9 @@ export async function processCitizens() {
         // Remove duplicates by creating a map with names as keys (maps automatically handle duplicates)
         const uniqueCitizens = Array.from(new Map(decryptedData.map(c => [c.name, c])).values());
 
+        // Log the number of unique citizens
+        console.log(`Number of unique citizens: ${uniqueCitizens.length}`);
+
         // Populate the citizens object with non-duplicate entries
         uniqueCitizens.forEach((citizen) => {
             if (!citizen.name || !citizen.homeworld) {
@@ -41,6 +44,9 @@ export async function processCitizens() {
         for (const citizen of Object.values(citizens)) {
             if (citizen.homeworld) uniqueHomeworldUrls.add(citizen.homeworld);
         }
+
+        // Log the number of unique homeworlds
+        console.log(`Number of unique homeworlds: ${uniqueHomeworldUrls.size}`);
 
         // Cache to store the mapping of homeworld URLs to homeworld names
         const homeworldCache = new Map<string, string>();

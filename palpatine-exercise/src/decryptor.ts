@@ -39,38 +39,30 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
                     },
                 }
             );
-            console.log('Decrypted Response Data:', response.data); // Log the response data for debugging
 
             // Parse the decrypted data and validate each citizen's data
             const parsedCitizens = response.data.map((citizen, index) => {
-                console.log(`Citizen ${index}:`, citizen); // Log the raw citizen data for inspection
-
                 let parsedCitizen;
                 // Check if the citizen is a string that needs to be parsed as JSON
                 if (typeof citizen === 'string') {
                     try {
                         parsedCitizen = JSON.parse(citizen); // Try parsing the citizen data
-                        console.log(`Parsed Citizen ${index}:`, parsedCitizen); // Log the parsed citizen for debugging
                     } catch (error) {
-                        console.error(`Error parsing citizen data at index ${index}:`, error); // Log any parsing errors
                         return null;  // Return null if parsing fails
                     }
                 } else {
                     // If the citizen is already an object, use it as is
                     parsedCitizen = citizen;
-                    console.log(`Citizen ${index} is already an object:`, parsedCitizen); // Log the citizen if no parsing is needed
                 }
 
                 // Validate that the citizen has both a valid name and homeworld
                 const isNameValid = parsedCitizen.name && parsedCitizen.name.trim().length > 0;
                 const isHomeworldValid = parsedCitizen.homeworld && parsedCitizen.homeworld.trim().length > 0;
 
-                // If either the name or homeworld is invalid, log a warning and skip this citizen
+                // If either the name or homeworld is invalid, skip this citizen
                 if (!isNameValid || !isHomeworldValid) {
-                    console.warn(`Citizen ${index} has missing data:`, parsedCitizen); // Log a warning for missing data
                     return null; // Skip this citizen
                 } else {
-                    console.log(`Citizen ${index} has valid data:`, parsedCitizen); // Log valid citizen data
                     return parsedCitizen; // Return the valid citizen data
                 }
             }).filter(Boolean);  // Filter out any invalid or null citizens
@@ -81,10 +73,8 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
         } catch (error) {
             // Handle any errors that occur during the decryption process
             if (axios.isAxiosError(error)) {
-
                 console.error('Error processing chunk:', error.response?.data || error.message); // Log the error details
             } else {
-                // If the error is not from Axios, it's an unknown error
                 console.error('Unknown error:', error);
             }
             throw error;
