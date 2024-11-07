@@ -1,9 +1,9 @@
 # Ambyint
 Install Dependencies (My node version - v22.4.0):
-npm install
+```npm install```
 
 Run the Program:
-npm start
+```npm start```
 
 Access Output:
 Open a browser and navigate to http://localhost:3000/process
