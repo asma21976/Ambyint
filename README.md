@@ -30,7 +30,7 @@ Solution:
 Implement a rate-limiting mechanism that ensures the program sends requests at a manageable pace. This prevents overwhelming the API and ensures compliance with any rate limits set by a service.
 Additionally, since we have many citizens that could share the same homeworld URL, caching previously fetch homeworld names can prevent redundant API calls.
 
-2.While in the code I used a hashmap to store homeworld URLs and their corresponding names, this can quickly grow large if there are millions of unique URLs. 
+2. While in the code I used a hashmap to store homeworld URLs and their corresponding names, this can quickly grow large if there are millions of unique URLs. 
 
 Solution:
 To handle this, we can replace the hashmap with an LRU cache. This type of cache stores only a limited number of the most recently accessed homeworld URLs, and when the cache reaches its limit, it will automatically evict the least recently used items. This ensures that our memory usage remains manageable while still providing quick access to frequently requested homeworld data.
