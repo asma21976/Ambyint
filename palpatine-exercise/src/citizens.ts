@@ -10,22 +10,21 @@ interface Citizen {
 export async function processCitizens() {
     try {
         // Load encrypted citizen data from a file
-        console.log('Loading encrypted data...');
         const encryptedData = await loadFile('super-secret-data.txt');
-        console.log('Encrypted data loaded:', encryptedData.length, 'entries');
+
+        // Check if the last item is just whitespace and remove it
+        if (encryptedData[encryptedData.length - 1].trim() === '') {
+            encryptedData.pop();
+        }
 
         // Decrypt the loaded data using the decryption function
-        console.log('Decrypting data...');
         const decryptedData = await decryptData(encryptedData);
-        console.log('Data decrypted:', decryptedData.length, 'entries');
 
         // Create an object to store unique citizens by name
         const citizens: { [name: string]: Citizen } = {};
 
         // Remove duplicates by creating a map with names as keys (maps automatically handle duplicates)
-        console.log('Removing duplicates...');
         const uniqueCitizens = Array.from(new Map(decryptedData.map(c => [c.name, c])).values());
-        console.log('Duplicates removed:', uniqueCitizens.length, 'unique entries');
 
         // Populate the citizens object with non-duplicate entries
         uniqueCitizens.forEach((citizen) => {
@@ -43,11 +42,8 @@ export async function processCitizens() {
             if (citizen.homeworld) uniqueHomeworldUrls.add(citizen.homeworld);
         }
 
-        console.log('Unique homeworld URLs identified:', uniqueHomeworldUrls.size);
-
         // Cache to store the mapping of homeworld URLs to homeworld names
         const homeworldCache = new Map<string, string>();
-        console.log('Fetching homeworld names...');
         
         // Fetch the homeworld names for all unique homeworld URLs to avoid excessive API calls
         for (const homeworldUrl of uniqueHomeworldUrls) {
@@ -59,8 +55,6 @@ export async function processCitizens() {
             }
             homeworldCache.set(homeworldUrl, homeworldName);
         }
-
-        console.log('Homeworld names fetched and cached.');
 
         // Group citizens by their homeworld names
         const groupedByHomeworld: { [key: string]: string[] } = {};
@@ -80,10 +74,7 @@ export async function processCitizens() {
             groupedByHomeworld[homeworldName].push(citizen.name);
         }
 
-        console.log('Citizens grouped by homeworld.');
-
         // Format the grouped data for output and write it to a file
-        console.log('Writing results to file...');
         const result = Object.entries(groupedByHomeworld)
             // Sort homeworlds alphabetically
             .sort(([homeworldA], [homeworldB]) => homeworldA.localeCompare(homeworldB))
@@ -93,7 +84,6 @@ export async function processCitizens() {
 
         // Save the formatted results to a file
         await saveFile('citizens-super-secret-info.txt', result);
-        console.log('Results written to citizens-super-secret-info.txt');
     } catch (error) {
         // Log any errors that occur during the process
         console.error('Error processing citizens:', error);

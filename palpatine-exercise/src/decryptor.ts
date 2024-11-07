@@ -89,7 +89,6 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
             }
             throw error;
         }
-        break; // This `break` statement limits the function to process only the first chunk
     }
 
     return decryptedData; // Return the decrypted data (with valid citizens) after processing
