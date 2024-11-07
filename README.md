@@ -11,10 +11,12 @@ Open a browser and navigate to http://localhost:3000/process
 This will generate the citizens-super-secret-info.txt file. This process can take up to 2 minutes but you should have an output that looks like this,
 
 ex.
+```
 Server running on port 3000
 Number of unique citizens: 96
 Number of unique homeworlds: 49
 File saved: citizens-super-secret-info.txt
+```
 
 View Output:
 The newly generated citizens-super-secret-info.txt file will contain citizen names grouped and sorted by homeworlds.
