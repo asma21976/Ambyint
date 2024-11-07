@@ -93,5 +93,6 @@ export async function processCitizens() {
     } catch (error) {
         // Log any errors that occur during the process
         console.error('Error processing citizens:', error);
+        throw error;
     }
 }
