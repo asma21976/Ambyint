@@ -38,8 +38,10 @@ const fs = __importStar(require("fs-extra"));
 function loadFile(filename) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            // Read the file content as a UTF-8 encoded string
             const data = yield fs.readFile(filename, 'utf8');
-            return data.split('\n'); // Assuming data is newline-separated
+            // Split the content by newlines and return it as an array of strings
+            return data.split('\n');
         }
         catch (error) {
             console.error(`Error reading file ${filename}:`, error);

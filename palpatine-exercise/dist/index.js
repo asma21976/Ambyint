@@ -16,9 +16,10 @@ const express_1 = __importDefault(require("express"));
 const citizens_1 = require("./citizens");
 const app = (0, express_1.default)();
 const PORT = 3000;
+// Endpoint to trigger citizen data processing
 app.get('/process', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, citizens_1.processCitizens)();
+        yield (0, citizens_1.processCitizens)(); // Calls the processCitizens function to handle the data
         res.send('Citizen data processed successfully!');
     }
     catch (error) {
@@ -26,4 +27,5 @@ app.get('/process', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).send('Error processing citizens');
     }
 }));
+// Starts the server and listens on the specified port
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

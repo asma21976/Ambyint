@@ -8,10 +8,10 @@ const PORT = 3000;
 app.get('/process', async (req, res) => {
     try {
         await processCitizens();  // Calls the processCitizens function to handle the data
-        res.send('Citizen data processed successfully!');  // Sends success message after processing
+        res.send('Citizen data processed successfully!'); 
     } catch (error) {
-        console.error(error);  // Logs any errors during processing
-        res.status(500).send('Error processing citizens');  // Sends an error response if something goes wrong
+        console.error(error);  
+        res.status(500).send('Error processing citizens');  
     }
 });
 

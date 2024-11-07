@@ -23,10 +23,9 @@ export async function processCitizens() {
         // Create an object to store unique citizens by name
         const citizens: { [name: string]: Citizen } = {};
 
-        // Remove duplicates by creating a map with names as keys (maps automatically handle duplicates)
+        // Remove duplicates by creating a map with names as keys
         const uniqueCitizens = Array.from(new Map(decryptedData.map(c => [c.name, c])).values());
 
-        // Log the number of unique citizens
         console.log(`Number of unique citizens: ${uniqueCitizens.length}`);
 
         // Populate the citizens object with non-duplicate entries
@@ -45,7 +44,6 @@ export async function processCitizens() {
             if (citizen.homeworld) uniqueHomeworldUrls.add(citizen.homeworld);
         }
 
-        // Log the number of unique homeworlds
         console.log(`Number of unique homeworlds: ${uniqueHomeworldUrls.size}`);
 
         // Cache to store the mapping of homeworld URLs to homeworld names
@@ -57,7 +55,7 @@ export async function processCitizens() {
             if (!homeworldName) {
                 // If the homeworld fetch fails, fall back to using the URL as the name
                 console.warn(`Failed to fetch homeworld for URL ${homeworldUrl}, using URL as fallback.`);
-                homeworldName = homeworldUrl; // Use the URL as fallback if the API fails
+                homeworldName = homeworldUrl;
             }
             homeworldCache.set(homeworldUrl, homeworldName);
         }
@@ -91,7 +89,7 @@ export async function processCitizens() {
         // Save the formatted results to a file
         await saveFile('citizens-super-secret-info.txt', result);
     } catch (error) {
-        // Log any errors that occur during the process
+
         console.error('Error processing citizens:', error);
         throw error;
     }

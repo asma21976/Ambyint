@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-dotenv.config(); // Loads environment variables from a .env file
+dotenv.config(); 
 
 interface DecryptedData {
     name: string;
@@ -31,11 +31,11 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
 
             // Send the chunk to the decryption API
             const response = await axios.post<DecryptedData[]>(
-                'https://txje3ik1cb.execute-api.us-east-1.amazonaws.com/prod/decrypt', // The API endpoint for decryption
+                'https://txje3ik1cb.execute-api.us-east-1.amazonaws.com/prod/decrypt',
                 requestBody,  // The request body containing the chunk of encrypted data
                 {
                     headers: {
-                        'x-api-key': process.env.API_KEY, // API key for authentication
+                        'x-api-key': process.env.API_KEY,
                     },
                 }
             );
@@ -59,11 +59,10 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
                 const isNameValid = parsedCitizen.name && parsedCitizen.name.trim().length > 0;
                 const isHomeworldValid = parsedCitizen.homeworld && parsedCitizen.homeworld.trim().length > 0;
 
-                // If either the name or homeworld is invalid, skip this citizen
                 if (!isNameValid || !isHomeworldValid) {
-                    return null; // Skip this citizen
+                    return null;
                 } else {
-                    return parsedCitizen; // Return the valid citizen data
+                    return parsedCitizen; 
                 }
             }).filter(Boolean);  // Filter out any invalid or null citizens
 
@@ -71,7 +70,7 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
             decryptedData = decryptedData.concat(parsedCitizens);
 
         } catch (error) {
-            // Handle any errors that occur during the decryption process
+
             if (axios.isAxiosError(error)) {
                 console.error('Error processing chunk:', error.response?.data || error.message); // Log the error details
             } else {
@@ -81,5 +80,5 @@ export async function decryptData(encryptedData: string[]): Promise<DecryptedDat
         }
     }
 
-    return decryptedData; // Return the decrypted data (with valid citizens) after processing
+    return decryptedData;
 }
